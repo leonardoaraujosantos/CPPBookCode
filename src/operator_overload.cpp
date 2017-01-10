@@ -12,9 +12,12 @@ class DeepModel {
 public:
   DeepModel(string p_name):m_name(p_name){};
 
-  // Override the "<=" operator to add something on the layer vector
-  // Reference: http://en.cppreference.com/w/cpp/language/operators
-  // Reference: https://en.wikibooks.org/wiki/C%2B%2B_Programming/Operators/Operator_Overloading
+  /*
+   Override the "<=" operator to add something on the layer vector
+   Reference: http://en.cppreference.com/w/cpp/language/operators
+   Reference: https://en.wikibooks.org/wiki/C%2B%2B_Programming/Operators/Operator_Overloading
+   Reference: https://www.youtube.com/watch?v=InIOEY0HXCE
+  */
   void operator<=(string p_layer){
     m_layerVec.push_back(p_layer);
   }
