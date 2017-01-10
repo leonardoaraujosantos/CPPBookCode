@@ -73,4 +73,6 @@ int main() {
   // Get areaas
   cout << "Rectangle area:" << rect.getArea() << endl;
   cout << "Triangle area:" << tri.getArea() << endl;
+
+  return 0;
 }
