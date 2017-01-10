@@ -14,6 +14,7 @@ public:
 
   // Override the "<=" operator to add something on the layer vector
   // Reference: http://en.cppreference.com/w/cpp/language/operators
+  // Reference: https://en.wikibooks.org/wiki/C%2B%2B_Programming/Operators/Operator_Overloading
   void operator<=(string p_layer){
     m_layerVec.push_back(p_layer);
   }
