@@ -8,6 +8,10 @@ using namespace std;
 class Shape {
 // Members available to everyone
 public:
+  // Default constructor
+  Shape() = default;
+  // Another constructor that already initialize width and height
+  Shape(int w, int h) : width(w),height(h){};
   // Pure virtual function (classes that derive from Shape need to implement)
   virtual int getArea() = 0;
 
@@ -19,8 +23,9 @@ public:
   }
 // Available only for child classes
 protected:
-  int width;
-  int height;
+  // C++11 allows initialize members on class declaration
+  int width = 0;
+  int height = 0;
 };
 
 // Child classes
@@ -32,6 +37,8 @@ public:
 };
 class Triangle: public Shape {
 public:
+  // Call the base constructor
+  Triangle(int w, int h): Shape(w,h) {};
   int getArea() {
     return (width*height)/2;
   }
@@ -39,13 +46,12 @@ public:
 
 int main() {
   Rectangle rect;
-  Triangle tri;
+
+  // New way to initialize on C++11
+  Triangle tri = {50,70};
 
   rect.setWidth(50);
   rect.setHeight(70);
   cout << "Rectangle area:" << rect.getArea() << endl;
-
-  tri.setWidth(50);
-  tri.setHeight(70);
   cout << "Triangle area:" << tri.getArea() << endl;
 }
