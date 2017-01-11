@@ -13,6 +13,9 @@ using namespace std;
 
 class Human {
 public:
+	~Human() {
+		cout << "Human destructor??" << endl;
+	}
 	string m_name;
 	int m_age;
 	string m_phone;
