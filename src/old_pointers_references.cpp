@@ -4,6 +4,8 @@ g++ -std=c++11 old_pointers_references.cpp -o old_pointers_references
 Check leaks with valgrind
 valgrind  --leak-check=full ./old_pointers_references
 Check the "definitely lost" errors
+Reference for valgrind:
+https://www.youtube.com/watch?v=fvTsFjDuag8
 */
 #include <iostream>
 #include <string>
