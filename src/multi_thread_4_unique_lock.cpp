@@ -4,10 +4,12 @@ multiprocess solutions, the problem that multithreaded has issues distribute
 tasks accross different machines
 
 References:
-https://www.youtube.com/watch?v=_N0B5ua7oN8&list=PL5jc9xFGsL8E12so1wlMS0r0hTQoJL74M&index=4
+http://en.cppreference.com/w/cpp/thread/sleep_for
+https://solarianprogrammer.com/2011/12/16/cpp-11-thread-tutorial/
+https://www.youtube.com/watch?v=LL8wkskDlbs&index=1&list=PL5jc9xFGsL8E12so1wlMS0r0hTQoJL74M
 
 To compile:
-g++ -std=c++11 -pthread multi_thread_3_dead_lock.cpp -o multi_thread_3_dead_lock
+g++ -std=c++11 -pthread multi_thread_4_unique_lock.cpp -o multi_thread_4_unique_lock
 */
 #include <iostream>
 #include <thread>
@@ -30,29 +32,21 @@ public:
     cout << "Dumping log do disk" << endl;
     m_file.close();
   }
-  void shared_print_1(string id, int value) {
-    lock_guard<mutex> guard_1(m_mutex_1);
-    lock_guard<mutex> guard_2(m_mutex_2);
-
-    cout << "From " << id << ": " << value << endl;
-  }
-  void shared_print_2(string id, int value) {
+  void shared_print(string id, int value) {
     /*
-      Now the bad part if 2 threads use the mutexes with different order
-      One of the threads will wait for one mutex forever (Deadlock)
+      If you want better control of your mutex instead of the guard
+      which lock the whole method you can use the unique_lock that allows you
+      to control where to unlock
     */
-    lock_guard<mutex> guard_2(m_mutex_2);
-    lock_guard<mutex> guard_1(m_mutex_1);
+    unique_lock<mutex> guard(m_mutex);
+    m_file << "From " << id << ": " << value << endl;
+    guard.unlock();
 
-    // To solve the Deadlock
-    //lock_guard<mutex> guard_1(m_mutex_1);
-    //lock_guard<mutex> guard_2(m_mutex_2);
-
-    cout << "From " << id << ": " << value << endl;
+    // Now from this point you can do other stuff in parallel that are
+    // thread safe.....
   }
 private:
-  mutex m_mutex_1;
-  mutex m_mutex_2;
+  mutex m_mutex;
   // Notice that m_file should never be given outside here because it could
   // be accessed without the mutex/guard
   ofstream m_file;
@@ -62,7 +56,7 @@ void someFunc(LogFile& log) {
   for (auto i = 100; i > 0; i--) {
     //cout << "From t1 thread: " << i << endl;
     // Calling the version protected by the mutex
-    log.shared_print_1(string("t1 thread"), i);
+    log.shared_print(string("t1 thread"), i);
   }
 }
 
@@ -79,7 +73,7 @@ int main() {
 
   for (auto i = 0; i < 100; i++) {
     //cout << "From main thread: " << i << endl;
-    log.shared_print_2(string("main thread"), i);
+    log.shared_print(string("main thread"), i);
   }
 
   /*
