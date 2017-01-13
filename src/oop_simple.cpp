@@ -13,7 +13,7 @@ public:
   // Another constructor that already initialize width and height
   Shape(int w, int h) : width(w),height(h){};
   // Pure virtual function (classes that derive from Shape need to implement)
-  virtual int getArea() = 0;
+  virtual int getArea() const = 0;
 
   void setWidth(int w) {
     width = w;
@@ -36,7 +36,8 @@ protected:
 // Child classes
 class Rectangle: public Shape {
 public:
-  int getArea() {
+  // The const will avoid that the method change some class member
+  int getArea() const {
     return width*height;
   }
   void displayInfo() override {
@@ -47,7 +48,7 @@ class Triangle: public Shape {
 public:
   // Call the base constructor
   Triangle(int w, int h): Shape(w,h) {};
-  int getArea() {
+  int getArea() const {
     return (width*height)/2;
   }
   // If you comment here it will fall-back to the original base version
