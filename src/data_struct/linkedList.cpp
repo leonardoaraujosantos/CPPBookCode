@@ -19,15 +19,15 @@ private:
 	class Node {
 	public:
 		someType data;
-		Node* refNext;
+		shared_ptr<Node> refNext;
 	};
-	Node* m_head = nullptr;
-	Node* m_curr = nullptr;
+	shared_ptr<Node> m_head = nullptr;
+	shared_ptr<Node> m_curr = nullptr;
 public:
 	void AddItem(someType value){
 		// Create new node
-		Node *newItem_ptr = new Node{value,nullptr};
-		//shared_ptr<Node> newItem_ptr (new Node{value,nullptr});
+		//Node *newItem_ptr = new Node{value,nullptr};
+		shared_ptr<Node> newItem_ptr (new Node{value,nullptr});
 				
 		// Is the begining of the list
 		if (m_head == nullptr) {
