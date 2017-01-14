@@ -44,8 +44,27 @@ public:
 	}
 
 	void printList() {		
+		// This part is complexity O(n)
 		for (auto n=m_head; n != nullptr; n=n->refNext){
 			cout << n->data << endl;
+		}
+	}
+
+	void DeleteItem(int pos){
+		// Point with a shared_ptr to the head
+		auto n=m_head;
+		// If you choose the first position
+		if (pos == 0){
+			// Head will point to the second node
+			m_head = n->refNext;			
+		} else {
+			// Fix the references of the list
+			for (auto idx = 0; idx < pos-1; idx++){
+				n = n->refNext;
+			}
+			// Now n points to the element before the delete
+			auto n2 = n->refNext;
+			n->refNext = n2->refNext;
 		}
 	}
 
@@ -62,7 +81,12 @@ int main(){
 	lList.AddItem("Helena");
 	lList.AddItem("Marcia");
 	lList.AddItem("Leticia");
+	lList.printList();
 
+	cout << "Delete a position:";
+	int position;
+	cin >> position;
+	lList.DeleteItem(position);
 	lList.printList();
 
 }
