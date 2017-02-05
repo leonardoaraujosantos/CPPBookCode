@@ -1,3 +1,11 @@
+/*
+References:
+http://rosettacode.org/wiki/Sorting_algorithms/Quicksort
+https://www.youtube.com/watch?v=aQiWF4E8flQ&t=3s
+https://www.youtube.com/watch?v=8hHWpuAPBHo
+https://www.youtube.com/watch?v=39BV3_DONJc
+https://www.youtube.com/watch?v=3OLTJlwyIqQ&t=188s
+*/
 #include <iostream>
 #include <random>
 #include <iterator>
@@ -46,6 +54,7 @@ void quicksort(Container& array, std::size_t left, std::size_t right) {
 }
 
 int main() {
+	// Is not working for the worst-case investigate
 	//std::vector<int> vec { 6, 6, 5, 4, 3, 2, 1 };
 	std::vector<int> vec { 2, 4, 6, 7, 2, 1, 5 };
 
