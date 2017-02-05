@@ -4,7 +4,7 @@
 #include <algorithm>
 
 
-int char2i(const char c){
+inline int char2i(const char c){
 	// Could be solved with a big switch or with the ASCII table
 	int num = c - 48;
 	return ((num > 9 || num < 0))? throw std::invalid_argument("Char is not a number") : num;
