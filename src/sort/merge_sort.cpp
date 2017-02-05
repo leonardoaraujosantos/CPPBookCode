@@ -1,3 +1,8 @@
+/*
+Merge sort example
+to compile:
+g++ merge_sort.cpp -o merge_sort -std=c++14
+*/
 #include <iostream>
 #include <vector>
 #include <algorithm>
