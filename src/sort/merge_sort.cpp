@@ -18,6 +18,8 @@ void printVec(const std::vector<int> &vec) {
  * Megesort, has better worst case complexity O(n*log(n)) but in practise can
  * be slower than quick sort due to cache miss.
  * Note that this solution is using recursion
+ * Reference:
+ * https://www.youtube.com/watch?v=EeQ8pwjQxTM
  * */
 template <typename T, typename Container=std::vector<T>>
 void mergeSort(Container& array) {
