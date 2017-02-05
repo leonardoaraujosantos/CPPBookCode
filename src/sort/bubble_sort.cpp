@@ -16,7 +16,7 @@ void printVec(const std::vector<int> &vec) {
 // The buble sort algorithm has wort-case complexity O(n^2)
 // We have 2 idented loops so O(n*n)
 template<typename Iter>
-void bubleSort(Iter first, Iter last) {
+void bubbleSort(Iter first, Iter last) {
 	auto neededSwap = true;
 	// Keep record with the beginning of the vector
 	auto beg = first;
@@ -50,7 +50,7 @@ int main() {
 
 	// Use std::sort to sort vector
 	//std::sort(vec.begin(), vec.end());
-	bubleSort(vec.begin(), vec.end());
+	bubbleSort(vec.begin(), vec.end());
 
 	std::cout << "After sort" << std::endl;
 	printVec(vec);
