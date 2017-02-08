@@ -3,7 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <chrono>
-
+# include <omp.h>
 #include <stack>
 
 using namespace std;
@@ -67,6 +67,19 @@ std::vector<someType> reverse_orig_fix(std::vector<someType> v) {
 	return v;
 }
 
+template<class someType>
+std::vector<someType> reverse_orig_fix_par(std::vector<someType> v) {
+	// Detect odd/even size and calculate offset
+	auto isOdd = v.size() % 2;
+	auto offset = (!isOdd) ? 1 : 0;
+	#pragma omp parallel for
+	for (auto i = int(v.size() / 2) - offset; 0 <= i; --i) {
+		//cout << "v[" << i << "]= v[" << destAddr << "]" << endl;
+		std::swap(v[i], v[v.size() - 1 - i]);
+	}
+	return v;
+}
+
 // Has error (Solved, improve...)
 std::vector<int> reverse_orig(std::vector<int> v) {
 	// From half+offset vector downto beginning
@@ -97,11 +110,14 @@ int main() {
 	// Measure time
 	auto start = chrono::steady_clock::now();
 	// Insert rev code here....
-	//vector<double> bigVec_rev = reverse_orig_fix<double>(bigVec);
+	vector<double> bigVec_rev = reverse_orig_fix<double>(bigVec);
 	//vector<double> bigVec_rev = reverse_stack<double>(bigVec);
-	vector<double> bigVec_rev = reverse<double>(bigVec);
+	//vector<double> bigVec_rev = reverse<double>(bigVec);
+	// Parallel version with openmp is 3x faster
+	vector<double> bigVec_rev = reverse_orig_fix_par<double>(bigVec);
 	auto end = chrono::steady_clock::now();
 	auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 	std::cout << "Time in ms: " << elapsed.count() << '\n';
 
 }
+
