@@ -62,8 +62,9 @@ std::vector<someType> reverse_stack(std::vector<someType> &v) {
 // Seems faster O(n)
 // v[ 4 3 2 1], will start from middle, ie: 2 v[2]=2
 // v_rev[1 2 3 4]
+// Not good and confuse
 template<class someType>
-std::vector<someType> reverse(std::vector<someType> &v) {
+std::vector<someType> reverse_first_fixed(std::vector<someType> &v) {
 	// Detect odd/even size
 	auto isOdd = v.size() % 2;
 	// Add offset if needed
@@ -124,11 +125,11 @@ int main() {
 	vector<int> someVec {1,2,3,4};
 	//vector<int> someVec { 1, 2, 3, 4, 5 };
 
-	//vector<int> someVec_rev = reverse<int>(someVec);
+	vector<int> someVec_rev = reverse_first_fixed<int>(someVec);
 	//vector<int> someVec_rev = reverse_stack<int>(someVec);
 	//vector<int> someVec_rev = reverse_orig(someVec);
 	//vector<int> someVec_rev = reverse_orig_fix<int>(someVec);
-	vector<int> someVec_rev = reverse_iter<int>(someVec);
+	//vector<int> someVec_rev = reverse_iter<int>(someVec);
 
 	for (auto i : someVec_rev) {
 		cout << i << endl;
@@ -141,11 +142,11 @@ int main() {
 	// Measure time
 	auto start = chrono::steady_clock::now();
 	// Insert rev code here....
-	//vector<double> bigVec_rev = reverse_orig_fix<double>(bigVec);
+	vector<double> bigVec_rev = reverse_orig_fix<double>(bigVec);
 	//vector<double> bigVec_rev = reverse_stack<double>(bigVec);
 	//vector<double> bigVec_rev = reverse<double>(bigVec);
 	//vector<double> bigVec_rev = reverse_orig_fix_par<double>(bigVec);
-	vector<double> bigVec_rev = reverse_iter<double>(bigVec);
+	//vector<double> bigVec_rev = reverse_iter<double>(bigVec);
 	auto end = chrono::steady_clock::now();
 	auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 	std::cout << "Time in ms: " << elapsed.count() << '\n';
