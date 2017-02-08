@@ -14,10 +14,11 @@
 using namespace std;
 
 /*
- * Try to solve problem with iterators
+ * Try to solve problem with iterators, it's more clear
+ * that will not go to a infinite loop, and the speed it the same
  * */
 template<class someType>
-std::vector<someType> reverse_iter(std::vector<someType> &v) {
+std::vector<someType> reverse_iter(std::vector<someType> v) {
 	auto stVec = v.begin(); auto midVec = stVec;
 	auto isOdd = v.size() % 2;
 	auto offset = (!isOdd) ? 1 : 0;
@@ -29,7 +30,6 @@ std::vector<someType> reverse_iter(std::vector<someType> &v) {
 		// (midVec - stVec) will convert midVec to a index position
 		std::swap(*midVec, *(stVec+sameCalc-(midVec - stVec)));
 	}
-
 
 	return v;
 }
@@ -111,6 +111,17 @@ std::vector<someType> reverse_orig_fix_par(std::vector<someType> v) {
 	return v;
 }
 
+template <typename T>
+std::vector<T> reverse_alexey(std::vector<T> v) {
+ // From half+offset vector downto beginning
+ size_t leng = v.size() / 2 - 1;
+  
+for (unsigned int i = 0; i <= leng; ++i) {
+  std::swap(v[i], v[v.size() - 1 - i]);
+ }
+ return std::move(v); //???
+}
+
 // Has error (Solved, improve...)
 std::vector<int> reverse_orig(std::vector<int> v) {
 	// From half+offset vector downto beginning
@@ -125,11 +136,11 @@ int main() {
 	vector<int> someVec {1,2,3,4};
 	//vector<int> someVec { 1, 2, 3, 4, 5 };
 
-	vector<int> someVec_rev = reverse_first_fixed<int>(someVec);
+	//vector<int> someVec_rev = reverse_first_fixed<int>(someVec);
 	//vector<int> someVec_rev = reverse_stack<int>(someVec);
 	//vector<int> someVec_rev = reverse_orig(someVec);
 	//vector<int> someVec_rev = reverse_orig_fix<int>(someVec);
-	//vector<int> someVec_rev = reverse_iter<int>(someVec);
+	vector<int> someVec_rev = reverse_iter<int>(someVec);
 
 	for (auto i : someVec_rev) {
 		cout << i << endl;
@@ -142,11 +153,12 @@ int main() {
 	// Measure time
 	auto start = chrono::steady_clock::now();
 	// Insert rev code here....
-	vector<double> bigVec_rev = reverse_orig_fix<double>(bigVec);
+	//vector<double> bigVec_rev = reverse_orig_fix<double>(bigVec);
+	//vector<double> bigVec_rev = reverse_alexey<double>(bigVec);
 	//vector<double> bigVec_rev = reverse_stack<double>(bigVec);
-	//vector<double> bigVec_rev = reverse<double>(bigVec);
+	//vector<double> bigVec_rev = reverse_first_fixed<double>(bigVec);
 	//vector<double> bigVec_rev = reverse_orig_fix_par<double>(bigVec);
-	//vector<double> bigVec_rev = reverse_iter<double>(bigVec);
+	vector<double> bigVec_rev = reverse_iter<double>(bigVec);
 	auto end = chrono::steady_clock::now();
 	auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 	std::cout << "Time in ms: " << elapsed.count() << '\n';
