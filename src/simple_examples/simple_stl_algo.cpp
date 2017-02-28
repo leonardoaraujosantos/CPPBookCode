@@ -20,6 +20,7 @@ bool find_Value(iterT itBeg, iterT itEnd, const T val){
 }
 
 int main() {
+  // Declare and define a vector using C++11 syntax
   vector<int> someValues = {1,2,3,4,5};
   
   // Iterate on all values of someValues (and print)
