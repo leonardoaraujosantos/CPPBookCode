@@ -50,6 +50,21 @@ public:
 		}
 	}
 
+	void printListRecursive(shared_ptr<Node> m_curr) {
+		// All recursive functions must have some sort of if-statement to stop
+		if (m_curr->refNext == nullptr)
+		{
+			return;
+		} else {
+			cout << m_curr->data << endl;
+			printListRecursive(m_curr->refNext);
+		}
+	}
+	void printListRecursive()
+	{
+		printListRecursive(m_head);
+	}
+
 	void DeleteItem(int pos){
 		// Point with a shared_ptr to the head
 		auto n=m_head;
@@ -107,6 +122,6 @@ int main(){
 
 	shared_ptr<LinkedList<string>> lListCopy = lList.CreateCopy();
 	cout << endl << endl << "Print a copy of the list" << endl;
-	lListCopy->printList();
+	lListCopy->printListRecursive();
 
 }
