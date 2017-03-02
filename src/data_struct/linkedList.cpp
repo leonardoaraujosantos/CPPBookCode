@@ -9,7 +9,7 @@ References:
 * http://codereview.stackexchange.com/questions/129035/building-a-simple-singly-linked-list-in-c11
 * https://www.youtube.com/watch?v=NobHlGUjV3g&list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P&index=3
 
-Compile	
+Compile
 	g++ -std=c++11 linkedList.cpp -o linkedList
 */
 
@@ -28,7 +28,7 @@ public:
 		// Create new node
 		//Node *newItem_ptr = new Node{value,nullptr};
 		shared_ptr<Node> newItem_ptr (new Node{value,nullptr});
-				
+
 		// Is the begining of the list
 		if (m_head == nullptr) {
 			m_head = newItem_ptr;
@@ -43,7 +43,7 @@ public:
 		}
 	}
 
-	void printList() {		
+	void printList() {
 		// This part is complexity O(n)
 		for (auto n=m_head; n != nullptr; n=n->refNext){
 			cout << n->data << endl;
@@ -56,7 +56,7 @@ public:
 		// If you choose the first position
 		if (pos == 0){
 			// Head will point to the second node
-			m_head = n->refNext;			
+			m_head = n->refNext;
 		} else {
 			// Fix the references of the list
 			for (auto idx = 0; idx < pos-1; idx++){
@@ -66,6 +66,22 @@ public:
 			auto n2 = n->refNext;
 			n->refNext = n2->refNext;
 		}
+	}
+
+	shared_ptr<LinkedList> CreateCopy(){
+		// Avoid copy empty list
+		if (m_head == nullptr)
+			return nullptr;
+		// Create a new instance of the object
+		shared_ptr<LinkedList> newList = shared_ptr<LinkedList>(new LinkedList);
+
+		// Now iterate on the current list
+		for (auto n=m_head; n != nullptr; n=n->refNext){
+			// Create a new element
+			newList->AddItem(n->data);
+		}
+
+		return newList;
 	}
 
 };
@@ -88,5 +104,9 @@ int main(){
 	cin >> position;
 	lList.DeleteItem(position);
 	lList.printList();
+
+	shared_ptr<LinkedList<string>> lListCopy = lList.CreateCopy();
+	cout << endl << endl << "Print a copy of the list" << endl;
+	lListCopy->printList();
 
 }
