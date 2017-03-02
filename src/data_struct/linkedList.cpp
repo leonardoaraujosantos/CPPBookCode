@@ -8,6 +8,7 @@ using namespace std;
 References:
 * http://codereview.stackexchange.com/questions/129035/building-a-simple-singly-linked-list-in-c11
 * https://www.youtube.com/watch?v=NobHlGUjV3g&list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P&index=3
+* http://stackoverflow.com/questions/20226797/print-linkedlist-recursively-using-c
 
 Compile
 	g++ -std=c++11 linkedList.cpp -o linkedList
