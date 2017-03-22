@@ -1,20 +1,33 @@
 #include <iostream>
 #include <string>
+#include <stack>
 using namespace std;
 
-/*
-    Add 2 binary numbers defined as strings "101" + "11".
-    Attention: The strings can be really big
-*/
+
 inline int binChar2Num(const char ch){
-    int val = 1?ch=='2':0;
+    int val = 1?(ch=='1'):0;
+    return val;
 }
 
+/*
+    Add 2 binary numbers defined as strings "101" + "11"=1000.
+    Attention: The strings can be really big
+*/
 string strBinSum(const string &num1, const string &num2){
-    string resp;
+    // Initialize with the size of the biggest string plus one character (Worst sum case 11+11=110)
+    string resp(max(num1.size(), num2.size())+1,'0');
+
+    // Select biggest operand
+    const string &refBig = (num1.size()>num2.size())?num1:num2;
+    const string &refSmall = (num1.size()<num2.size())?num1:num2;
+
+    // Create stack for carry-bit
+    stack<int> stCarry;
+
     // Iterate on num1 on reverse order
-    auto itr2 = num2.rbegin();
-    for (auto itr1 = num1.rbegin(); itr1 != num1.rend(); ++itr1){
+    auto itr2 = refSmall.rbegin();
+    auto itrResp = resp.rbegin();
+    for (auto itr1 = refBig.rbegin(); itr1 != refBig.rend(); ++itr1){
         char c1 = *itr1;
         char c2 = *itr2;
         // Handle if there is no more binary digits on num2 (just return 0)
@@ -25,14 +38,39 @@ string strBinSum(const string &num1, const string &num2){
         }
         int val1 = binChar2Num(c1);
         int val2 = binChar2Num(c2);
-        cout << c1 << " + " << c2 << endl;
 
+        // Get carry bit
+        int carry = 0;
+        if (stCarry.empty()){
+            carry = 0;
+        } else {
+            carry = stCarry.top();
+            stCarry.pop();
+        }
+
+        // Do the sum including carry
+        int res = val1 + val2 + carry;
+        if (res > 1) {
+            stCarry.push(1);
+            res = 0;
+        }
+        *itrResp = to_string(res).at(0);
+        itrResp++;
+    }
+    // Add carry there is still something to add
+    if (!stCarry.empty()){
+        auto lastVal = stCarry.top();
+        stCarry.pop();
+        *itrResp = to_string(lastVal).at(0);
     }
     return resp;
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-    string sumBin = strBinSum("1010","11");
+    //string sumBin = strBinSum("101","11");
+    string sumBin = strBinSum("10001110001001100101","100110011");
+    auto resultRef = string("10001110001110011000");
+    cout << "10001110001001100101 + 100110011 = " << sumBin << endl;
     return 0;
 }
