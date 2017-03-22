@@ -12,6 +12,7 @@ inline int binChar2Num(const char ch){
 /*
     Add 2 binary numbers defined as strings "101" + "11"=1000.
     Attention: The strings can be really big and will not fit on a long long variable
+    45 min to complete.
 */
 string strBinSum(const string &num1, const string &num2){
     // Initialize with the size of the biggest string plus one character (Worst sum case 11+11=110)
